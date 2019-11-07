@@ -2,9 +2,10 @@
     <div class="inputForm">
         <h3>Current thread: {{tid}} </h3>
         <a class="x" href="#" onclick="this.parentElement.parentElement.style.display='none'">x</a>
+ 
         <input v-model="form.email" placeholder="email"  type="text">
         <br/>
-        <input id="message" v-model="form.text" placeholder="Text..." type="text">
+        <textarea id="message" v-model="text" placeholder="Text..." />
         <br/>
         <input v-model="image" placeholder="image..." type="text">
         <button v-on:click="submit">Send</button>
@@ -19,7 +20,7 @@ import nanoajax from 'nanoajax'
 
 export default {
     name: 'InputForm',
-    props: ["tid", "answer"],
+    props: ["tid", "text"],
        data: function(){
         return{
             form: {
@@ -37,6 +38,7 @@ export default {
     methods: {
         submit: function(){
             this.form.images.push(this.image);
+            this.form.text = this.text;
             var data = 'data='+JSON.stringify(this.form);
             nanoajax.ajax({url: server + '/api/threads' + this.tid + '?' + data, method: 'POST'}, (code, responseText) => {
                 this.responseText = responseText;
@@ -66,6 +68,12 @@ export default {
     }
     #message{
         height: 200px;
+        width:  500px;
+        padding: 7px 5px;
+        margin: 2px 2px;
+        box-sizing: border-box;
+        border: 1px solid gray;
+
     }
    .inputForm button {
         background-color: #6475c1;

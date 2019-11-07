@@ -1,6 +1,6 @@
 <template>
     <div class="post">
-        {{data.email}}: {{data.humanEpoch}} №{{data.id}} <br />
+        {{data.email}}: {{data.humanEpoch}}  <a href="#" v-on:click="$emit('answer',data)">№{{data.id}}</a> <br/>
         <div v-for="image in data.images" :key="image" v-on:click="$emit('click-on-image',image)" class="images">
             <img class="image" :src="image" alt="">
         </div>

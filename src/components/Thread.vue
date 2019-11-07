@@ -3,8 +3,8 @@
     <div class="Thread">
         <b>Thread {{tid}}:</b>
         <Post v-for="post in posts" :key="post.id" :data="post"
-            v-on:click-on-phone="$emit('click-on-phone',loadedAd.phoneNumber)"
             v-on:click-on-image="clickImageEvent"
+            v-on:answer="answerEvent"
         />
     </div>
 </template>
@@ -25,6 +25,9 @@ export default {
     methods: {
         clickImageEvent: function(image){
             this.$emit('click-on-image', image);
+        },
+        answerEvent: function(data){
+            this.$emit('answer', data);
         }
     },
     mounted: function(){
