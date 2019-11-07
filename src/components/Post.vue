@@ -1,0 +1,45 @@
+<template>
+    <div class="post">
+        {{data.email}}: {{data.humanEpoch}} №{{data.id}} <br />
+        <div v-for="image in data.images" :key="image" v-on:click="$emit('click-on-image',image)" class="images">
+            <img class="image" :src="image" alt="">
+        </div>
+            {{data.text}}
+   </div>
+</template>
+
+
+<script>
+export default {
+    name: "Post",
+    props: ["data"],
+};
+</script>
+
+<style scoped>
+    .red {
+        color: red;
+    }
+    .green {
+        color: green;
+    }
+    .post{
+        text-align: left;
+        border: solid 1px;
+        margin: 3px;
+        padding: 2px;
+        background: #f1f1f1;
+    }
+    .images:hover{
+        opacity: 0.7;
+        cursor: pointer;
+    }
+    .images{
+        display: inline-block;
+        margin: 2px;
+    }
+    .image{
+        width: 100px;
+        height: 100px;
+    }
+</style>

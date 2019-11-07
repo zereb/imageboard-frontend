@@ -1,0 +1,86 @@
+<template>
+    <div class="inputForm">
+        <h3>Current thread: {{tid}} </h3>
+        <a class="x" href="#" onclick="this.parentElement.parentElement.style.display='none'">x</a>
+        <input v-model="form.email" placeholder="email"  type="text">
+        <br/>
+        <input id="message" v-model="form.text" placeholder="Text..." type="text">
+        <br/>
+        <input v-model="image" placeholder="image..." type="text">
+        <button v-on:click="submit">Send</button>
+    </div>
+</template>
+
+<script>
+import nanoajax from 'nanoajax'
+    var localServer = "http://localhost:8080";
+    var server =  localServer;
+
+
+export default {
+    name: 'InputForm',
+    props: ["tid", "answer"],
+       data: function(){
+        return{
+            form: {
+                id: "1",
+                tid: "1",
+                epoch: "1",
+                email: "",
+                images: [],
+                text: ""
+            },
+            image: ""
+
+        }
+    },
+    methods: {
+        submit: function(){
+            this.form.images.push(this.image);
+            var data = 'data='+JSON.stringify(this.form);
+            nanoajax.ajax({url: server + '/api/threads' + this.tid + '?' + data, method: 'POST'}, (code, responseText) => {
+                this.responseText = responseText;
+                alert(responseText);
+            });
+        }
+    },
+}
+</script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
+    .x{
+        position: relative;
+        float: right;
+    }
+    .inputForm{
+        padding: 0px 4px 4px 0px;
+        max-width: 500px;
+    }
+    .inputForm input[type=text] {
+        width: 500px;
+        padding: 7px 5px;
+        margin: 2px 2px;
+        box-sizing: border-box;
+        border: 1px solid gray;
+    }
+    #message{
+        height: 200px;
+    }
+   .inputForm button {
+        background-color: #6475c1;
+        border: none;
+        color: white;
+        padding: 8px 10px;
+        margin: 0px;
+        text-decoration: none;
+        cursor: pointer;
+        float: right;
+        
+    }
+    .inputForm h3 {
+        float: left;
+        margin: 8px 2px;
+    }
+
+</style>
