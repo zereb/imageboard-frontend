@@ -36,21 +36,27 @@ export default {
     methods: {
         processFiles: function(){
             this.image = this.$refs.images.files[0];
+        },
+
+        submit: function(){
+            this.form.text = this.text;
+            this.tid = "/" + this.tid;
             let formData = new FormData();
             formData.append('files', this.image);
             nanoajax.ajax({url: server + '/api/images', method : 'POST', body: formData}, (code, responseText) => {
-                
-            });
-        },
-        submit: function(){
-            this.form.images.push(this.image);
-            this.form.text = this.text;
-            this.tid = "/" + this.tid;
-            var data = 'data='+JSON.stringify(this.form);
-            nanoajax.ajax({url: server + '/api/threads' + this.tid + '?' + data, method: 'POST'}, (code, responseText) => {
-                this.responseText = responseText;
-                alert(responseText);
-            });
+                var response = JSON.parse(responseText).response[0].name;
+                // eslint-disable-next-line no-console
+                console.log(response);
+                this.image = server + '/' +response;
+                this.form.images.push(this.image);
+                var data = 'data='+JSON.stringify(this.form);
+                // eslint-disable-next-line no-console
+                console.log(data);
+                nanoajax.ajax({url: server + '/api/threads' + this.tid + '?' + data, method: 'POST'}, (code, responseText) => {
+                    this.responseText = responseText;
+                    alert(responseText);
+                });
+           });
         }
     },
 }
