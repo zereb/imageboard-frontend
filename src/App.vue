@@ -48,8 +48,13 @@ export default {
     },
     methods: {
         openInputForm: function(data){
-            this.tid = data.tId;
-            this.text = ">>" + data.id;
+            if(typeof data.tId != 'undefined'){
+                this.tid = data.tId;
+                this.text = ">>" + data.id;
+            }else{
+                this.tid = "";
+                this.text = "";
+            }
             document.getElementById("hide").style.display='block';
         },
         showBigImage: function(image){

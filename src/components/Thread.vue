@@ -1,7 +1,8 @@
 
 <template>
     <div class="Thread">
-        <b>Thread {{tid}}:</b>
+        <!-- <b>Thread {{tid}}:</b> -->
+        <hr/>
         <Post v-for="post in posts" :key="post.id" :data="post"
             v-on:click-on-image="clickImageEvent"
             v-on:answer="answerEvent"

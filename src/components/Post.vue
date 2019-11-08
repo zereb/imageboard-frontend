@@ -19,11 +19,12 @@ export default {
 <style scoped>
     .red {
         color: red;
-    }
+    }left
     .green {
         color: green;
     }
     .post{
+
         text-align: left;
         border: solid 1px;
         margin: 3px;

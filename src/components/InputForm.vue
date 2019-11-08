@@ -2,12 +2,11 @@
     <div class="inputForm">
         <h3>Current thread: {{tid}} </h3>
         <a class="x" href="#" onclick="this.parentElement.parentElement.style.display='none'">x</a>
- 
         <input v-model="form.email" placeholder="email"  type="text">
         <br/>
         <textarea id="message" v-model="text" placeholder="Text..." />
         <br/>
-        <input v-model="image" placeholder="image..." type="text">
+        <input ref="images"  accept=".jpg, .jpeg, .png, .gif" type="file" v-on:change="processFiles">
         <button v-on:click="submit">Send</button>
     </div>
 </template>
@@ -32,13 +31,21 @@ export default {
                 text: ""
             },
             image: ""
-
         }
     },
     methods: {
+        processFiles: function(){
+            this.image = this.$refs.images.files[0];
+            let formData = new FormData();
+            formData.append('files', this.image);
+            nanoajax.ajax({url: server + '/api/images', method : 'POST', body: formData}, (code, responseText) => {
+                
+            });
+        },
         submit: function(){
             this.form.images.push(this.image);
             this.form.text = this.text;
+            this.tid = "/" + this.tid;
             var data = 'data='+JSON.stringify(this.form);
             nanoajax.ajax({url: server + '/api/threads' + this.tid + '?' + data, method: 'POST'}, (code, responseText) => {
                 this.responseText = responseText;
