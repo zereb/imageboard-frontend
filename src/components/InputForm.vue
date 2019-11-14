@@ -41,22 +41,29 @@ export default {
         submit: function(){
             this.form.text = this.text;
             this.tid = "/" + this.tid;
-            let formData = new FormData();
-            formData.append('files', this.image);
-            nanoajax.ajax({url: server + '/api/images', method : 'POST', body: formData}, (code, responseText) => {
-                var response = JSON.parse(responseText).response[0].name;
-                // eslint-disable-next-line no-console
-                console.log(response);
-                this.image = server + '/' +response;
-                this.form.images.push(this.image);
-                var data = 'data='+JSON.stringify(this.form);
-                // eslint-disable-next-line no-console
-                console.log(data);
-                nanoajax.ajax({url: server + '/api/threads' + this.tid + '?' + data, method: 'POST'}, (code, responseText) => {
-                    this.responseText = responseText;
-                    alert(responseText);
+            if(this.image !== ''){
+                let formData = new FormData();
+                formData.append('files', this.image);
+                nanoajax.ajax({url: server + '/api/images', method : 'POST', body: formData}, (code, responseText) => {
+                    
+
+                    var response = JSON.parse(responseText).response[0].name;
+                    this.image = server + '/' +response;
+                    this.form.images.push(this.image);
+                    var data = 'data='+JSON.stringify(this.form);
+                    this.sendThreadData(data);
                 });
-           });
+            }else{
+                var data = 'data='+JSON.stringify(this.form);
+                this.sendThreadData(data);
+            }
+        },
+        sendThreadData: function(data){
+            nanoajax.ajax({url: server + '/api/threads' + this.tid + '?' + data, method: 'POST'}, (code, responseText) => {
+                this.responseText = responseText;
+                
+                location.reload();
+            });
         }
     },
 }

@@ -50,7 +50,7 @@ export default {
         openInputForm: function(data){
             if(typeof data.tId != 'undefined'){
                 this.tid = data.tId;
-                this.text = ">>" + data.id;
+                this.text = ">>" + data.id + "\n";
             }else{
                 this.tid = "";
                 this.text = "";

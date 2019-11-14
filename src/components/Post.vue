@@ -4,7 +4,7 @@
         <div v-for="image in data.images" :key="image" v-on:click="$emit('click-on-image',image)" class="images">
             <img class="image" :src="image" alt="">
         </div>
-            {{data.text}}
+            <pre>{{data.text}}</pre>
    </div>
 </template>
 
@@ -24,7 +24,7 @@ export default {
         color: green;
     }
     .post{
-
+        max-width: max-content;
         text-align: left;
         border: solid 1px;
         margin: 3px;
