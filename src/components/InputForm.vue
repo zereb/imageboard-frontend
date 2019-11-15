@@ -12,12 +12,15 @@
 </template>
 
 <script>
-import nanoajax from 'nanoajax'
+    import nanoajax from 'nanoajax'
+    import { util } from '../mixins/util.js'
+
     var localServer = "http://localhost:8080";
     var server =  localServer;
 
 
 export default {
+    mixins: [util],
     name: 'InputForm',
     props: ["tid", "text"],
        data: function(){
@@ -40,13 +43,13 @@ export default {
 
         submit: function(){
             this.form.text = this.text;
-            this.tid = "/" + this.tid;
+            this.tid = this.tid;
             if(this.image !== ''){
                 let formData = new FormData();
                 formData.append('files', this.image);
                 nanoajax.ajax({url: server + '/api/images', method : 'POST', body: formData}, (code, responseText) => {
-                    
-
+                    if ( this.checkResponse(responseText) )
+                        return;
                     var response = JSON.parse(responseText).response[0].name;
                     this.image = server + '/' +response;
                     this.form.images.push(this.image);
@@ -59,7 +62,9 @@ export default {
             }
         },
         sendThreadData: function(data){
-            nanoajax.ajax({url: server + '/api/threads' + this.tid + '?' + data, method: 'POST'}, (code, responseText) => {
+            nanoajax.ajax({url: server + '/api/threads/' + this.tid + '?' + data, method: 'POST'}, (code, responseText) => {
+                if ( this.checkResponse(responseText) )
+                    return;
                 this.responseText = responseText;
                 
                 location.reload();

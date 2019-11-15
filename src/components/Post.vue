@@ -4,6 +4,7 @@
         <div v-for="image in data.images" :key="image" v-on:click="$emit('click-on-image',image)" class="images">
             <img class="image" :src="image" alt="">
         </div>
+
             <pre>{{data.text}}</pre>
    </div>
 </template>
@@ -28,7 +29,7 @@ export default {
         text-align: left;
         border: solid 1px;
         margin: 3px;
-        padding: 2px;
+        padding: 2px 10px;
         background: #f1f1f1;
     }
     .images:hover{

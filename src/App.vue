@@ -1,7 +1,7 @@
 <template>
     <div id="app">
         <div class="createThread">
-            <a href="#" v-on:click="openInputForm('')">Create new thread</a>
+            <a href="#" v-on:click="openInputForm('new')">Create new thread</a>
             <hr/>
         </div>
         <div id="hs" class="container">
@@ -10,10 +10,24 @@
         <div id="hide">
             <InputForm :tid="tid" :text="text"/>
         </div>
-        <Thread v-for="tid in tids" :tid="tid" :server="server" :key="tid"
-                v-on:click-on-image="showBigImage"
-                v-on:answer="openInputForm"
-         />
+        
+        <p v-if="tid === '' ">
+            <Thread v-for="thread in threads" :tid="thread" :server="server" :key="thread" v-bind:id="thread" :show="true"
+                    v-on:click-on-image="showBigImage"
+                    v-on:answer="openInputForm"
+                    v-on:open-thread="openThread"
+            />
+         </p>
+         <p v-else>
+            <a href="#" v-on:click="back">Back</a> | Thread: {{tid}} | <a href="#" v-on:click="openInputForm">Answer</a>
+            | <a href="#" v-on:click="update">Update</a>
+
+            <Thread :tid="tid" :server="server" :key="updKey" v-bind:id="tid" :show="false"
+                    v-on:click-on-image="showBigImage"
+                    v-on:answer="openInputForm"
+                    v-on:open-thread="openThread"
+            />
+         </p>
   </div>
 </template>
 
@@ -33,17 +47,17 @@ export default {
     },
     data: function(){
         return {
-            tids: [],
+            threads: [],
             server: server,
             tid: "",
             bigImg: "",
-            text: ""
-            
+            text: "",
+            updKey: 1
         }
     },
     mounted: function(){
         nanoajax.ajax({url: server + '/api/threads', method: 'GET'}, (code, responseText) => {
-            this.tids = JSON.parse(responseText).response;
+            this.threads = JSON.parse(responseText).response;
         });
     },
     methods: {
@@ -51,8 +65,10 @@ export default {
             if(typeof data.tId != 'undefined'){
                 this.tid = data.tId;
                 this.text = ">>" + data.id + "\n";
-            }else{
+            }else if(data === 'new'){
                 this.tid = "";
+                this.text = "";
+            }else{
                 this.text = "";
             }
             document.getElementById("hide").style.display='block';
@@ -61,6 +77,17 @@ export default {
             this.bigImg = image;
             document.getElementById('hs').style.display='block';
         },
+        openThread: function(tid){
+            this.tid = tid;
+        },
+        back: function(){
+            location.reload();
+        },
+        update: function(){
+            this.updKey++;
+
+        }
+
     }
 }
 </script>
