@@ -66,8 +66,8 @@ export default {
                 if ( this.checkResponse(responseText) )
                     return;
                 this.responseText = responseText;
-                
-                location.reload();
+                this.$emit('submit-button', data.tId)
+                // location.reload();
             });
         }
     },

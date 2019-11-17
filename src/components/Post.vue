@@ -7,7 +7,8 @@
         <div v-for="image in data.images" :key="image" v-on:click="$emit('click-on-image',image)" class="images">
             <img class="image" :src="image" alt="">
         </div>
-            <pre>{{data.text}}</pre>
+        <p>{{data.text}}</p>
+        <div style="clear:both"></div>
    </div>
    </div>
 </template>
@@ -25,9 +26,12 @@ export default {
         text-decoration: none;
         margin-left: 5px;
     }
+    pre{
+        max-width: 100%;
+    }
     .red {
         color: red;
-    }left
+    }
     .green {
         color: green;
     }
@@ -41,7 +45,9 @@ export default {
 
     }
     .post{
+        flex: 1;
         max-width: max-content;
+        min-width: 300px;
         text-align: left;
         border: solid 1px;
         margin: 3px;
@@ -53,8 +59,10 @@ export default {
         cursor: pointer;
     }
     .images{
-        display: inline-block;
-        margin: 2px;
+        display: block;
+        margin: 5px;
+        clear: left;
+        float: left;
     }
     .image{
         width: 100px;

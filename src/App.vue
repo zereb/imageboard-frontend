@@ -7,7 +7,7 @@
             <img class="imgBig" :src="bigImg" onclick="this.parentElement.style.display='none'" >
         </div>
         <div id="hide">
-            <InputForm :tid="tid" :text="text"/>
+            <InputForm :tid="tid" :text="text" v-on:submit-button="update"/>
         </div>
         
         <p v-if="tid === '' ">
