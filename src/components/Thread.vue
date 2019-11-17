@@ -1,15 +1,14 @@
 <template>
     <div class="Thread">
-        <!-- <b>Thread {{tid}}:</b> -->
         <hr/>
-        <a v-if="show" href="#" v-on:click="openThreadEvent(tid)">{{tid}}</a>
         <div v-for="(post, index) in posts" :key="post.id">
-            <div v-if="!show"><Post :data="post" v-bind:id="post.id"
+            <div v-if="!show"><Post :data="post" v-bind:id="post.id" :index="index"
                 v-on:click-on-image="clickImageEvent"
                 v-on:answer="answerEvent"
             /> 
             </div>
-            <div v-else-if="index == 0 || index > posts.length-3" ><Post :data="post" v-bind:id="post.id"
+            <div v-else-if="index == 0 || index > posts.length-3" >
+                <Post :data="post" v-bind:id="post.id" :index="index"
                 v-on:click-on-image="clickImageEvent"
                 v-on:answer="answerEvent"
             /> 
@@ -55,6 +54,12 @@ export default {
 <style scoped>
     .ads{
         font-size: 14px;
+    }
+    hr{
+        border: none;
+        height: 1px;
+        color: #666; /* old IE */
+        background-color: #666; /* Modern Browsers */
     }
 </style>
 

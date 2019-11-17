@@ -1,8 +1,7 @@
 <template>
     <div id="app">
         <div class="createThread">
-            <a href="#" v-on:click="openInputForm('new')">Create new thread</a>
-            <hr/>
+            <a href="#" v-on:click="openInputForm('new')"><h3> Create new thread</h3></a>
         </div>
         <div id="hs" class="container">
             <img class="imgBig" :src="bigImg" onclick="this.parentElement.style.display='none'" >
@@ -93,8 +92,14 @@ export default {
 </script>
 
 <style>
+body{
+    background: #dfdfdf;
+}
 #hide{
     display: none;
+}
+a{
+    text-decoration: none;
 }
 .inputForm{
     display: block;
