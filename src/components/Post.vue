@@ -7,7 +7,7 @@
         <div v-for="image in data.images" :key="image" v-on:click="$emit('click-on-image',image)" class="images">
             <img class="image" :src="image" alt="">
         </div>
-        <p>{{data.text}}</p>
+        <p style="white-space: pre-line;">{{data.text}}</p>
         <div style="clear:both"></div>
    </div>
    </div>
@@ -65,7 +65,7 @@ export default {
         float: left;
     }
     .image{
-        width: 100px;
-        height: 100px;
+        width: 200px;
+        height: 200px;
     }
 </style>

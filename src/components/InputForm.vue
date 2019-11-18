@@ -1,12 +1,13 @@
 <template>
-    <div class="inputForm">
+    <div id="inputForm" class="inputForm">
+        {{form.images}}
         <h3>Current thread: {{tid}} </h3>
-        <a class="x" href="#" onclick="this.parentElement.parentElement.style.display='none'">x</a>
+        <a class="x" v-on:click="resetInputForm">x</a>
         <input v-model="form.email" placeholder="email"  type="text">
         <br/>
         <textarea id="message" v-model="text" placeholder="Text..." />
         <br/>
-        <input ref="images"  accept=".jpg, .jpeg, .png, .gif" type="file" v-on:change="processFiles">
+        <input ref="images" accept="image/*" type="file" v-on:change="processFiles" class="input-file">
         <button v-on:click="submit">Send</button>
     </div>
 </template>
@@ -33,7 +34,7 @@ export default {
                 images: [],
                 text: ""
             },
-            image: ""
+            image: "",
         }
     },
     methods: {
@@ -43,7 +44,6 @@ export default {
 
         submit: function(){
             this.form.text = this.text;
-            this.tid = this.tid;
             if(this.image !== ''){
                 let formData = new FormData();
                 formData.append('files', this.image);
@@ -65,11 +65,20 @@ export default {
             nanoajax.ajax({url: server + '/api/threads/' + this.tid + '?' + data, method: 'POST'}, (code, responseText) => {
                 if ( this.checkResponse(responseText) )
                     return;
-                this.responseText = responseText;
-                this.$emit('submit-button', data.tId)
-                // location.reload();
+                this.resetInputForm();
+                this.$emit('submit-button', data.tId);
             });
-        }
+        },
+        resetInputForm: function(){
+            document.getElementById("inputForm").parentElement.style.display='none';
+            this.image = "";
+            this.form.images = [];
+            //stypid js hacks
+            const input = this.$refs.images;
+            input.type = 'text';
+            input.type = 'file';
+    }
+    
     },
 }
 </script>
@@ -79,6 +88,8 @@ export default {
     .x{
         position: relative;
         float: right;
+        cursor: pointer;
+        font-size: 16px;
     }
     .inputForm{
         padding: 0px 4px 4px 0px;

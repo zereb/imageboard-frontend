@@ -119,7 +119,7 @@ a{
     bottom: 0;
     left: 0;
     width:fit-content;
-    height:60%;
+    height:100%;
     display: none;
   }
 
