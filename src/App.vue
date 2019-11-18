@@ -9,7 +9,6 @@
         <div id="hide">
             <InputForm :tid="tid" :text="text" v-on:submit-button="openThread"/>
         </div>
-        {{tid}}
         <p v-if="tid === '' ">
             <Thread v-for="thread in threads" :tid="thread" :server="server" :key="thread" v-bind:id="thread" :show="true"
                     v-on:click-on-image="showBigImage"
@@ -19,7 +18,7 @@
          </p>
          <p v-else>
             <a href="#" v-on:click="back">Back</a> | Thread: {{tid}} | <a href="#" v-on:click="openInputForm">Answer</a>
-            | <a href="#" v-on:click="update">Update</a>
+            | <a href="#" v-on:click="update">Update</a> | <input v-model="autoUpd" type="checkbox"/>Autoupdate {{timer}}
 
             <Thread :tid="tid" :server="server" :key="updKey" v-bind:id="tid" :show="false"
                     v-on:click-on-image="showBigImage"
@@ -51,7 +50,9 @@ export default {
             tid: "",
             bigImg: "",
             text: "",
-            updKey: 1
+            updKey: 1,
+            autoUpd: false,
+            timer: 35
         }
     },
     mounted: function(){
@@ -86,9 +87,23 @@ export default {
         },
         update: function(){
             this.updKey++;
+            this.timer = 35;
 
         }
-
+    },
+    watch: {
+        autoUpd: function(){
+            if(this.autoUpd)
+                this.interval = setInterval(() => {
+                    this.timer--;
+                    if(this.timer < 0)
+                        this.update();
+                }, 1000);
+            else{
+                this.timer = 35;
+                clearInterval(this.interval);
+            }
+        }
     }
 }
 </script>
@@ -108,6 +123,7 @@ a{
     position: fixed;
     margin: 0px;
     right: 11%;
+    margin-top: 10%; 
     border: solid 1px;
     background-color: #f1f1f1;
 
