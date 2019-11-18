@@ -4,8 +4,8 @@
         <b>{{index}}.</b> {{data.email}}: {{data.humanEpoch}}  <a href="#" v-on:click="$emit('answer',data)">№{{data.id}}</a>
         <a v-if="index == 0" href="#" v-on:click="$emit('answer',data)">[open]</a>
         <br/>
-        <div v-for="image in data.images" :key="image" v-on:click="$emit('click-on-image',image)" class="images">
-            <img class="image" :src="image" alt="">
+        <div v-for="image in data.images" :key="image" v-on:click="$emit('click-on-image',img_prefix + image)" class="images">
+            <img class="image" :src="img_prefix +image" alt="">
         </div>
         <p style="white-space: pre-line;">{{data.text}}</p>
         <div style="clear:both"></div>
@@ -15,9 +15,20 @@
 
 
 <script>
+import { util } from '../mixins/util.js'
+
 export default {
+    mixins: [util],
     name: "Post",
     props: ["data", "index"],
+    computed: {
+        thumb_prefix: function(){
+            return this.server() + '/thumb_';
+        },
+        img_prefix: function(){
+            return this.server() + '/';
+        } 
+    }
 };
 </script>
 

@@ -40,7 +40,6 @@ export default {
         processFiles: function(){
             this.image = this.$refs.images.files[0];
         },
-
         submit: function(){
             this.form.text = this.text;
             if(this.image !== ''){
@@ -50,7 +49,7 @@ export default {
                     if ( this.checkResponse(responseText) )
                         return;
                     var response = JSON.parse(responseText).response[0].name;
-                    this.image = server + '/' +response;
+                    this.image = response;
                     this.form.images.push(this.image);
                     var data = 'data='+JSON.stringify(this.form);
                     this.sendThreadData(data);
