@@ -1,6 +1,5 @@
 <template>
     <div id="inputForm" class="inputForm">
-        {{form.images}}
         <h3>Current thread: {{tid}} </h3>
         <a class="x" v-on:click="resetInputForm">x</a>
         <input v-model="form.email" placeholder="email"  type="text">
@@ -65,15 +64,16 @@ export default {
             nanoajax.ajax({url: server + '/api/threads/' + this.tid + '?' + data, method: 'POST'}, (code, responseText) => {
                 if ( this.checkResponse(responseText) )
                     return;
+                let response = JSON.parse(responseText).response;
                 this.resetInputForm();
-                this.$emit('submit-button', data.tId);
+                this.$emit('submit-button', response);
             });
         },
         resetInputForm: function(){
             document.getElementById("inputForm").parentElement.style.display='none';
             this.image = "";
             this.form.images = [];
-            //stypid js hacks
+            //stupid js hacks
             const input = this.$refs.images;
             input.type = 'text';
             input.type = 'file';
@@ -93,18 +93,21 @@ export default {
     }
     .inputForm{
         padding: 0px 4px 4px 0px;
-        max-width: 500px;
+        max-width: 600px;
+        min-width: 600px;
     }
     .inputForm input[type=text] {
-        width: 500px;
+        width: 100%;
         padding: 7px 5px;
         margin: 2px 2px;
         box-sizing: border-box;
         border: 1px solid gray;
     }
     #message{
-        height: 200px;
-        width:  500px;
+        max-height: 300px;
+        min-height: 300px;
+        max-width:  100%;
+        min-width:  100%;
         padding: 7px 5px;
         margin: 2px 2px;
         box-sizing: border-box;

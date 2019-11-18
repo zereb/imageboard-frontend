@@ -7,9 +7,9 @@
             <img class="imgBig" :src="bigImg" onclick="this.parentElement.style.display='none'" >
         </div>
         <div id="hide">
-            <InputForm :tid="tid" :text="text" v-on:submit-button="update"/>
+            <InputForm :tid="tid" :text="text" v-on:submit-button="openThread"/>
         </div>
-        
+        {{tid}}
         <p v-if="tid === '' ">
             <Thread v-for="thread in threads" :tid="thread" :server="server" :key="thread" v-bind:id="thread" :show="true"
                     v-on:click-on-image="showBigImage"
@@ -77,6 +77,8 @@ export default {
             document.getElementById('hs').style.display='block';
         },
         openThread: function(tid){
+            if(this.tid === tid)
+                this.update();
             this.tid = tid;
         },
         back: function(){
