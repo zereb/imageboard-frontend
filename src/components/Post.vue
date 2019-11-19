@@ -7,7 +7,8 @@
         <div v-for="image in data.images" :key="image" v-on:click="$emit('click-on-image',img_prefix + image)" class="images">
             <img class="image" :src="thumb_prefix +image" alt="">
         </div>
-        <p style="white-space: pre-line;">{{data.text}}</p>
+        <p style="white-space: pre-line;" v-html="formated_text">{{formated_text}}</p>
+        <!-- {{formated_text}} -->
         <div style="clear:both"></div>
    </div>
    </div>
@@ -27,7 +28,11 @@ export default {
         },
         img_prefix: function(){
             return this.server() + '/';
-        } 
+        },
+        formated_text: function(){
+            return this.format_text(this.data.text);
+        }
+         
     }
 };
 </script>

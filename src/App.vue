@@ -112,6 +112,9 @@ export default {
 body{
     background: #dfdfdf;
 }
+.green{
+    color: green;
+}
 #hide{
     display: none;
 }
