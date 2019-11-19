@@ -144,8 +144,10 @@ a{
 .imgBig{
     background-color:#2d2c2c;
     padding:5px;
+    margin-top: 1%;
+    margin-bottom: 1%;
     width:auto;
-    height:100%;
+    height:95%;
   }
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;

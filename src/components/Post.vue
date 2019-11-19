@@ -5,7 +5,7 @@
         <a v-if="index == 0" href="#" v-on:click="$emit('answer',data)">[open]</a>
         <br/>
         <div v-for="image in data.images" :key="image" v-on:click="$emit('click-on-image',img_prefix + image)" class="images">
-            <img class="image" :src="img_prefix +image" alt="">
+            <img class="image" :src="thumb_prefix +image" alt="">
         </div>
         <p style="white-space: pre-line;">{{data.text}}</p>
         <div style="clear:both"></div>

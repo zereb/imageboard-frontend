@@ -55,12 +55,12 @@ export default {
                     this.sendThreadData(data);
                 });
             }else{
-                var data = 'data='+JSON.stringify(this.form);
+                var data = 'data='+ encodeURIComponent(JSON.stringify(this.form));
                 this.sendThreadData(data);
             }
         },
         sendThreadData: function(data){
-            nanoajax.ajax({url: server + '/api/threads/' + this.tid + '?' + data, method: 'POST'}, (code, responseText) => {
+            nanoajax.ajax({url: server + '/api/threads/' + this.tid , body: data, method: 'POST'}, (code, responseText) => {
                 if ( this.checkResponse(responseText) )
                     return;
                 let response = JSON.parse(responseText).response;
