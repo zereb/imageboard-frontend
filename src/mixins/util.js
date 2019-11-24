@@ -11,8 +11,7 @@ export const util = {
             else return false;
         },
         server: function(){
-            var localServer = "http://localhost:8080";
-            return localServer;
+            return window.location.host;
         },
         
     }

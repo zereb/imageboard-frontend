@@ -4,7 +4,7 @@
         <Post :data="post" v-bind:id="post.id" :index="-1"
                 v-on:click-on-image="clickImageEvent"
                 v-on:answer="answerEvent"
-            /> 
+        />
     </div>
     <div class="post" :id="'id'+index">
         <b>{{index}}.</b> {{data.email}}: {{data.humanEpoch}}  <a href="#" v-on:click="$emit('answer',data)">№{{data.id}}</a>

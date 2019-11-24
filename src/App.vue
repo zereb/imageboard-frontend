@@ -34,8 +34,7 @@ import InputForm from './components/InputForm.vue'
 import Thread from './components/Thread.vue'
 import nanoajax from 'nanoajax'
 
-var localServer = "http://localhost:8080";
-var server =  localServer;
+var server = window.location.host;
 
 export default {
     name: 'app',
@@ -46,7 +45,6 @@ export default {
     data: function(){
         return {
             threads: [],
-            server: server,
             tid: "",
             bigImg: "",
             text: "",

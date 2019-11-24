@@ -15,8 +15,7 @@
     import nanoajax from 'nanoajax'
     import { util } from '../mixins/util.js'
 
-    var localServer = "http://localhost:8080";
-    var server =  localServer;
+    var server =  window.location.host;
 
 
 export default {

@@ -21,10 +21,12 @@
 import Post from './Post.vue'
 import nanoajax from 'nanoajax'
 
+var server = window.location.host;
+
 export default {
     name: "Thread",
     components: {Post},
-    props: ["tid", "server", "show"],
+    props: ["tid", "show"],
     data: function(){
         return {
             posts: ""
@@ -42,7 +44,7 @@ export default {
         }
     },
     mounted: function(){
-        nanoajax.ajax({url: this.server + '/api/threads/' + this.tid, method: 'GET'}, (code, responseText) => {
+        nanoajax.ajax({url: server + '/api/threads/' + this.tid, method: 'GET'}, (code, responseText) => {
             this.posts = JSON.parse(responseText).response;
 
         });
