@@ -14,6 +14,9 @@
             <img class="image" :src="thumb_prefix +image" alt="">
         </div>
         <p style="white-space: pre-line;" v-html="data.text"></p>
+        <span v-for="response in data.responses" :key="response">
+            <a :href="'#'+response" v-on:mouseover="hoverOnResponse(response)" >>>{{response}}</a>
+        </span>
         <div style="clear:both"></div>
     </div>
     </div>
@@ -65,6 +68,11 @@ export default {
         },
         answerEvent: function(data){
             this.$emit('answer', data);
+        },
+        hoverOnResponse: function(id){
+            nanoajax.ajax({url: this.server() + '/api/posts/' + id, method: 'GET'}, (code, responseText) => {
+                this.posts = JSON.parse(responseText).response;
+            });
         }
     },
     created: function(){
