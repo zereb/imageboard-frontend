@@ -23,7 +23,7 @@ export default {
     mixins: [util],
     name: 'InputForm',
     props: ["tid", "text"],
-       data: function(){
+    data: function(){
         return{
             form: {
                 id: "1",
